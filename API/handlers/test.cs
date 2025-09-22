@@ -11,7 +11,7 @@ class Prog
             Console.WriteLine("Данные после добавления:");
             foreach (User u in users)
             {
-                Console.WriteLine($"{u.ID}.{u.Name} - {u.number_phone}");
+                Console.WriteLine($"{u.ID}.{u.Name} - {u.Number_Phone}");
             }
         }
     }
