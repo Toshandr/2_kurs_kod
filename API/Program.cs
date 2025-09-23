@@ -1,3 +1,6 @@
+using Telegram.Bot;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
@@ -16,5 +19,10 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllers();
+
+
+var bot = new TelegramBotClient("8335329999:AAFCHSE7KHsAWXQ8rJhgcNE6sarCMqo8ix8");
+var me = await bot.GetMe();
+Console.WriteLine($"Hello, World! I am user {me.Id} and my name is {me.FirstName}.");
 
 app.Run();

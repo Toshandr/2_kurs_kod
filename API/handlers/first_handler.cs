@@ -20,7 +20,7 @@ public class UsersController : ControllerBase
                 List<string> answer = new List<string>();
                 foreach (User u in users)
                 {
-                    answer.Add($"{u.ID}.{u.Name} - {u.Number_Phone}");
+                    answer.Add($"{u.ID}.{u.Name} - {u.Telegram_Teg}");
                 }
                 return Ok(answer);
             }
