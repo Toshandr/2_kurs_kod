@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
+using Microsoft.EntityFrameworkCore.Storage;
 
 
 [ApiController]
@@ -10,7 +12,8 @@ public class UsersController : ControllerBase
     {
         try
         {
-            using (ApplicationContext db = new ApplicationContext())
+            return Ok();
+            /*using (ApplicationContext db = new ApplicationContext())
             {
                 var users = db.Users.ToList();
                 if (users == null || users.Count == 0)
@@ -23,7 +26,7 @@ public class UsersController : ControllerBase
                     answer.Add($"{u.ID}.{u.Name} - {u.Telegram_Teg}");
                 }
                 return Ok(answer);
-            }
+            }*/
         }
         catch (Exception ex)
         {

@@ -469,6 +469,12 @@
           }
         }
       },
+      "Microsoft.EntityFrameworkCore.Tools/9.0.9": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Design": "9.0.9"
+        }
+      },
       "Microsoft.Extensions.ApiDescription.Server/9.0.0": {
         "type": "package",
         "build": {
@@ -770,6 +776,15 @@
           "lib/net8.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "Pester/4.0.5-rc": {
+        "type": "package"
+      },
+      "PesterForPackageManagerConsole/2.0.0-rc": {
+        "type": "package",
+        "dependencies": {
+          "Pester": "4.0.5-rc"
         }
       },
       "Swashbuckle.AspNetCore/9.0.4": {
@@ -2175,6 +2190,31 @@
         "microsoft.entityframeworkcore.relational.nuspec"
       ]
     },
+    "Microsoft.EntityFrameworkCore.Tools/9.0.9": {
+      "sha512": "Q8n1PXXJApa1qX8HI3r/YuHoJ1HuLwjI2hLqaCV9K9pqQhGpi6Z38laOYwL2ElUOTWCxTKMDEMMYWfPlw6rwgg==",
+      "type": "package",
+      "path": "microsoft.entityframeworkcore.tools/9.0.9",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "docs/PACKAGE.md",
+        "microsoft.entityframeworkcore.tools.9.0.9.nupkg.sha512",
+        "microsoft.entityframeworkcore.tools.nuspec",
+        "tools/EntityFrameworkCore.PS2.psd1",
+        "tools/EntityFrameworkCore.PS2.psm1",
+        "tools/EntityFrameworkCore.psd1",
+        "tools/EntityFrameworkCore.psm1",
+        "tools/about_EntityFrameworkCore.help.txt",
+        "tools/init.ps1",
+        "tools/net472/any/ef.exe",
+        "tools/net472/win-arm64/ef.exe",
+        "tools/net472/win-x86/ef.exe",
+        "tools/netcoreapp2.0/any/ef.dll",
+        "tools/netcoreapp2.0/any/ef.runtimeconfig.json"
+      ]
+    },
     "Microsoft.Extensions.ApiDescription.Server/9.0.0": {
       "sha512": "1Kzzf7pRey40VaUkHN9/uWxrKVkLu2AQjt+GVeeKLLpiEHAJ1xZRsLSh4ZZYEnyS7Kt2OBOPmsXNdU+wbcOl5w==",
       "type": "package",
@@ -2913,6 +2953,97 @@
         "postgresql.png"
       ]
     },
+    "Pester/4.0.5-rc": {
+      "sha512": "0Srzno3b6vLMTvTB30hlY1KBMlr1ylGSNclO+bpQfKIOurv+DW8CYn/oUvbg1cDnRSaACK5aqguwMgxA91DFIQ==",
+      "type": "package",
+      "path": "pester/4.0.5-rc",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "chocolateyInstall.ps1",
+        "pester.4.0.5-rc.nupkg.sha512",
+        "pester.nuspec",
+        "tools/Functions/Assertions/Be.ps1",
+        "tools/Functions/Assertions/BeGreaterThan.ps1",
+        "tools/Functions/Assertions/BeIn.ps1",
+        "tools/Functions/Assertions/BeLessThan.ps1",
+        "tools/Functions/Assertions/BeLike.ps1",
+        "tools/Functions/Assertions/BeLikeExactly.ps1",
+        "tools/Functions/Assertions/BeNullOrEmpty.ps1",
+        "tools/Functions/Assertions/BeOfType.ps1",
+        "tools/Functions/Assertions/Contain.ps1",
+        "tools/Functions/Assertions/ContainExactly.ps1",
+        "tools/Functions/Assertions/ContainMultiline.ps1",
+        "tools/Functions/Assertions/Exist.ps1",
+        "tools/Functions/Assertions/Match.ps1",
+        "tools/Functions/Assertions/MatchExactly.ps1",
+        "tools/Functions/Assertions/PesterThrow.ps1",
+        "tools/Functions/Assertions/Set-TestInconclusive.ps1",
+        "tools/Functions/Assertions/Should.ps1",
+        "tools/Functions/Context.ps1",
+        "tools/Functions/Coverage.ps1",
+        "tools/Functions/Describe.ps1",
+        "tools/Functions/Environment.ps1",
+        "tools/Functions/Gherkin.ps1",
+        "tools/Functions/GherkinHook.ps1",
+        "tools/Functions/GherkinStep.ps1",
+        "tools/Functions/In.ps1",
+        "tools/Functions/InModuleScope.ps1",
+        "tools/Functions/It.ps1",
+        "tools/Functions/Mock.ps1",
+        "tools/Functions/New-Fixture.ps1",
+        "tools/Functions/New-MockObject.ps1",
+        "tools/Functions/Output.ps1",
+        "tools/Functions/PesterState.ps1",
+        "tools/Functions/SetupTeardown.ps1",
+        "tools/Functions/TestDrive.ps1",
+        "tools/Functions/TestResults.ps1",
+        "tools/LICENSE",
+        "tools/Pester.psd1",
+        "tools/Pester.psm1",
+        "tools/Snippets/Context.snippets.ps1xml",
+        "tools/Snippets/Describe.snippets.ps1xml",
+        "tools/Snippets/It.snippets.ps1xml",
+        "tools/Snippets/ShouldBe.snippets.ps1xml",
+        "tools/Snippets/ShouldBeGreaterThan.snippets.ps1xml",
+        "tools/Snippets/ShouldBeLessThan.snippets.ps1xml",
+        "tools/Snippets/ShouldBeNullOrEmpty.snippets.ps1xml",
+        "tools/Snippets/ShouldContain.snippets.ps1xml",
+        "tools/Snippets/ShouldExist.snippets.ps1xml",
+        "tools/Snippets/ShouldMatch.snippets.ps1xml",
+        "tools/Snippets/ShouldNotBe.snippets.ps1xml",
+        "tools/Snippets/ShouldNotBeNullOrEmpty.snippets.ps1xml",
+        "tools/Snippets/ShouldNotContain.snippets.ps1xml",
+        "tools/Snippets/ShouldNotExist.snippets.ps1xml",
+        "tools/Snippets/ShouldNotMatch.snippets.ps1xml",
+        "tools/Snippets/ShouldNotThrow.snippets.ps1xml",
+        "tools/Snippets/ShouldThrow.snippets.ps1xml",
+        "tools/bin/pester.bat",
+        "tools/en-US/Gherkin.psd1",
+        "tools/en-US/RSpec.psd1",
+        "tools/en-US/about_BeforeEach_AfterEach.help.txt",
+        "tools/en-US/about_Mocking.help.txt",
+        "tools/en-US/about_Pester.help.txt",
+        "tools/en-US/about_Should.help.txt",
+        "tools/en-US/about_TestDrive.help.txt",
+        "tools/lib/gherkin.dll",
+        "tools/nunit_schema_2.5.xsd"
+      ]
+    },
+    "PesterForPackageManagerConsole/2.0.0-rc": {
+      "sha512": "ny/abhyCKdvq24Dt8GtzgBEXQNzNWi6TAclaX6CQxQ/SvbhCBUXjBvs20tPM2NtnnKU5ewbI73HXjiawou+iDg==",
+      "type": "package",
+      "path": "pesterforpackagemanagerconsole/2.0.0-rc",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "pesterforpackagemanagerconsole.2.0.0-rc.nupkg.sha512",
+        "pesterforpackagemanagerconsole.nuspec",
+        "tools/init.ps1"
+      ]
+    },
     "Swashbuckle.AspNetCore/9.0.4": {
       "sha512": "4hghaogMoS87Ivjj8s7aGuGsxrsjXZpjNvahLsN+zSLrZQcV8zQyiBweBd9AXC1sGkeNYb9/hbeS1EXrZ/hKjQ==",
       "type": "package",
@@ -3394,7 +3525,9 @@
       "Microsoft.AspNetCore.OpenApi >= 9.0.9",
       "Microsoft.EntityFrameworkCore >= 9.0.9",
       "Microsoft.EntityFrameworkCore.Design >= 9.0.9",
+      "Microsoft.EntityFrameworkCore.Tools >= 9.0.9",
       "Npgsql.EntityFrameworkCore.PostgreSQL >= 9.0.4",
+      "PesterForPackageManagerConsole >= 2.0.0-rc",
       "Swashbuckle.AspNetCore >= 9.0.4",
       "Telegram.Bot >= 22.7.2"
     ]
@@ -3456,9 +3589,19 @@
             "target": "Package",
             "version": "[9.0.9, )"
           },
+          "Microsoft.EntityFrameworkCore.Tools": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[9.0.9, )"
+          },
           "Npgsql.EntityFrameworkCore.PostgreSQL": {
             "target": "Package",
             "version": "[9.0.4, )"
+          },
+          "PesterForPackageManagerConsole": {
+            "target": "Package",
+            "version": "[2.0.0-rc, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",

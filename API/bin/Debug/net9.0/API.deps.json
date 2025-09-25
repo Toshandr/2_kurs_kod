@@ -11,7 +11,9 @@
           "Microsoft.AspNetCore.OpenApi": "9.0.9",
           "Microsoft.EntityFrameworkCore": "9.0.9",
           "Microsoft.EntityFrameworkCore.Design": "9.0.9",
+          "Microsoft.EntityFrameworkCore.Tools": "9.0.9",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "9.0.4",
+          "PesterForPackageManagerConsole": "2.0.0-rc",
           "Swashbuckle.AspNetCore": "9.0.4",
           "Telegram.Bot": "22.7.2"
         },
@@ -394,6 +396,11 @@
           }
         }
       },
+      "Microsoft.EntityFrameworkCore.Tools/9.0.9": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Design": "9.0.9"
+        }
+      },
       "Microsoft.Extensions.ApiDescription.Server/9.0.0": {},
       "Microsoft.Extensions.Caching.Abstractions/9.0.9": {
         "dependencies": {
@@ -558,6 +565,12 @@
             "assemblyVersion": "9.0.4.0",
             "fileVersion": "9.0.4.0"
           }
+        }
+      },
+      "Pester/4.0.5-rc": {},
+      "PesterForPackageManagerConsole/2.0.0-rc": {
+        "dependencies": {
+          "Pester": "4.0.5-rc"
         }
       },
       "Swashbuckle.AspNetCore/9.0.4": {
@@ -815,6 +828,13 @@
       "path": "microsoft.entityframeworkcore.relational/9.0.9",
       "hashPath": "microsoft.entityframeworkcore.relational.9.0.9.nupkg.sha512"
     },
+    "Microsoft.EntityFrameworkCore.Tools/9.0.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Q8n1PXXJApa1qX8HI3r/YuHoJ1HuLwjI2hLqaCV9K9pqQhGpi6Z38laOYwL2ElUOTWCxTKMDEMMYWfPlw6rwgg==",
+      "path": "microsoft.entityframeworkcore.tools/9.0.9",
+      "hashPath": "microsoft.entityframeworkcore.tools.9.0.9.nupkg.sha512"
+    },
     "Microsoft.Extensions.ApiDescription.Server/9.0.0": {
       "type": "package",
       "serviceable": true,
@@ -933,6 +953,20 @@
       "sha512": "sha512-mw5vcY2IEc7L+IeGrxpp/J5OSnCcjkjAgJYCm/eD52wpZze8zsSifdqV7zXslSMmfJG2iIUGZyo3KuDtEFKwMQ==",
       "path": "npgsql.entityframeworkcore.postgresql/9.0.4",
       "hashPath": "npgsql.entityframeworkcore.postgresql.9.0.4.nupkg.sha512"
+    },
+    "Pester/4.0.5-rc": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-0Srzno3b6vLMTvTB30hlY1KBMlr1ylGSNclO+bpQfKIOurv+DW8CYn/oUvbg1cDnRSaACK5aqguwMgxA91DFIQ==",
+      "path": "pester/4.0.5-rc",
+      "hashPath": "pester.4.0.5-rc.nupkg.sha512"
+    },
+    "PesterForPackageManagerConsole/2.0.0-rc": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ny/abhyCKdvq24Dt8GtzgBEXQNzNWi6TAclaX6CQxQ/SvbhCBUXjBvs20tPM2NtnnKU5ewbI73HXjiawou+iDg==",
+      "path": "pesterforpackagemanagerconsole/2.0.0-rc",
+      "hashPath": "pesterforpackagemanagerconsole.2.0.0-rc.nupkg.sha512"
     },
     "Swashbuckle.AspNetCore/9.0.4": {
       "type": "package",
