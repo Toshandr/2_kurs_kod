@@ -16,5 +16,4 @@ public partial class User
     public string CityNow { get; set; } = null!;
 
     public string CityLater { get; set; } = null!;
-
 }

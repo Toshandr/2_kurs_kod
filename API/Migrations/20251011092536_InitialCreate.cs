@@ -6,26 +6,26 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateUsersTable : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "users",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "integer", nullable: false)
+                    id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    Age = table.Column<int>(type: "integer", nullable: false),
-                    Number_Phone = table.Column<string>(type: "text", nullable: false),
-                    City_Now = table.Column<string>(type: "text", nullable: false),
-                    City_Later = table.Column<string>(type: "text", nullable: false)
+                    name = table.Column<string>(type: "character varying", nullable: false),
+                    age = table.Column<int>(type: "integer", nullable: false),
+                    telegram_teg = table.Column<string>(type: "character varying", nullable: false),
+                    city_now = table.Column<string>(type: "character varying", nullable: false),
+                    city_later = table.Column<string>(type: "character varying", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.ID);
+                    table.PrimaryKey("users_pkey", x => x.id);
                 });
         }
 
@@ -33,7 +33,7 @@ namespace API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "users");
         }
     }
 }

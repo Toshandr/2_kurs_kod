@@ -25,10 +25,24 @@ public partial class BaseContext : DbContext
     {
         modelBuilder.Entity<User>(entity =>
         {
-            entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.CityLater).HasColumnName("City_Later");
-            entity.Property(e => e.CityNow).HasColumnName("City_Now");
-            entity.Property(e => e.TelegramTeg).HasColumnName("Telegram_Teg");
+            entity.HasKey(e => e.Id).HasName("users_pkey");
+
+            entity.ToTable("users");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Age).HasColumnName("age");
+            entity.Property(e => e.CityLater)
+                .HasColumnType("character varying")
+                .HasColumnName("city_later");
+            entity.Property(e => e.CityNow)
+                .HasColumnType("character varying")
+                .HasColumnName("city_now");
+            entity.Property(e => e.Name)
+                .HasColumnType("character varying")
+                .HasColumnName("name");
+            entity.Property(e => e.TelegramTeg)
+                .HasColumnType("character varying")
+                .HasColumnName("telegram_teg");
         });
 
         OnModelCreatingPartial(modelBuilder);
