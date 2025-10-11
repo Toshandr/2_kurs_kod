@@ -1,38 +1,84 @@
+using API.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
 using Microsoft.EntityFrameworkCore.Storage;
 
+namespace API.Models;
+
 
 [ApiController]
-[Route("api/[controller]")]
-public class UsersController : ControllerBase
+[Route("api/users")]
+public class usersController : ControllerBase
 {
-    [HttpGet]
-    public IActionResult Get()
+    [HttpGet("list")]
+    public IActionResult GetAllStudents()
     {
         try
         {
-            return Ok();
-            /*using (ApplicationContext db = new ApplicationContext())
+            using (BaseContext db = new BaseContext())
             {
                 var users = db.Users.ToList();
+                var connectionString = db.Users.Count();
                 if (users == null || users.Count == 0)
                 {
-                    return BadRequest("Пользователей нет");
+                    return BadRequest(connectionString);
                 }
+
                 List<string> answer = new List<string>();
-                foreach (User u in users)
+
+                foreach (var u in users)
                 {
-                    answer.Add($"{u.ID}.{u.Name} - {u.Telegram_Teg}");
+                    answer.Add($"{u.Id}.{u.Name} - {u.TelegramTeg}");
                 }
                 return Ok(answer);
-            }*/
+            }
         }
         catch (Exception ex)
         {
             return BadRequest(ex.Message);
         }
     }
+
+    [HttpPost]
+    public IActionResult UserRegistration()
+    {
+        try
+        {
+            using (BaseContext db = new BaseContext())
+            {
+                var new_user = new User
+                {
+                    Id = 14,
+                    Name = "Slava",
+                    Age = 18, //
+                    TelegramTeg = "@Vyachoga",
+                    CityNow = "Voronezh",
+                    CityLater = "Voronezh" //
+                };
+
+                db.Users.Add(new_user);
+                db.SaveChanges();
+                return Ok("Босс, он тут");
+            }
+        }
+        catch (Exception ex)
+        {
+            return BadRequest($"Oops... {ex.Message}");
+        }
+    }
+
+
+    [HttpGet("stat")]
+    public IActionResult Statistic()
+    {
+        using (BaseContext db = new BaseContext()) {
+            var users = db.Users.ToList();
+            var ans = users.CountBy(x => x.CityNow);
+            return Ok(ans);    
+        }
+    }
+    
 }
 
 
