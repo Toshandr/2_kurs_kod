@@ -1,7 +1,10 @@
+using System.Text;
+using System.Text.Json;
 using Telegram.Bot;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
+using API.Models;
 
 public class Bot
 {
@@ -30,7 +33,7 @@ public class Bot
 
         var me = await _botClient.GetMeAsync();
         Console.WriteLine($"Бот @{me.Username} запущен!");
-        
+
         await Task.Delay(-1, cancellationToken);
     }
 
@@ -45,35 +48,113 @@ public class Bot
         if (message.Text == "/start")
         {
             string firstName = user?.FirstName ?? "Не указано";
+            string lastName = user?.LastName ?? "";
             string username = user?.Username != null ? $"@{user.Username}" : "Не указан";
 
             _userStates[chatId] = new UserData
             {
                 FirstName = firstName,
+                LastName = lastName,
                 Username = username,
-                IsWaitingForCity = true
+                IsWaitingForAge = true
             };
 
             await botClient.SendTextMessageAsync(
                 chatId: chatId,
-                text: $"✅ Ваши данные:\n👤 Имя: {firstName}\n📛 Никнейм: {username}\n\n🏙️ Введите ваш город:",
+                text: $"✅ Ваши данные:\n👤 Имя: {firstName}\n📛 Никнейм: {username}\n\n📅 Введите ваш возраст:",
                 cancellationToken: cancellationToken);
             return;
         }
 
-        if (_userStates.ContainsKey(chatId) && _userStates[chatId].IsWaitingForCity)
+        if (_userStates.ContainsKey(chatId))
         {
-            string city = message.Text;
             var userData = _userStates[chatId];
-            userData.City = city;
-            userData.IsWaitingForCity = false;
 
-            await botClient.SendTextMessageAsync(
-                chatId: chatId,
-                text: $"✅ Все данные:\n👤 Имя: {userData.FirstName}\n📛 Никнейм: {userData.Username}\n🏙️ Город: {userData.City}",
-                cancellationToken: cancellationToken);
+            if (userData.IsWaitingForAge)
+            {
+                if (int.TryParse(message.Text, out int age) && age > 0 && age < 120)
+                {
+                    userData.Age = age;
+                    userData.IsWaitingForAge = false;
+                    userData.IsWaitingForCity = true;
 
-            _userStates.Remove(chatId);
+                    await botClient.SendTextMessageAsync(
+                        chatId: chatId,
+                        text: "🏙️ Теперь введите ваш город:",
+                        cancellationToken: cancellationToken);
+                }
+                else
+                {
+                    await botClient.SendTextMessageAsync(
+                        chatId: chatId,
+                        text: "❌ Пожалуйста, введите корректный возраст (число от 1 до 120):",
+                        cancellationToken: cancellationToken);
+                }
+                return;
+            }
+
+            if (userData.IsWaitingForCity)
+            {
+                string city = message.Text;
+                userData.City = city;
+                userData.IsWaitingForCity = false;
+
+                // Сохраняем пользователя напрямую в базу данных
+                bool registrationSuccess = await RegisterUserInDatabase(userData);
+
+                if (registrationSuccess)
+                {
+                    await botClient.SendTextMessageAsync(
+                        chatId: chatId,
+                        text: $"✅ Регистрация завершена!\n\n📋 Ваши данные:\n👤 Имя: {userData.FirstName}\n📛 Никнейм: {userData.Username}\n📅 Возраст: {userData.Age}\n🏙️ Город: {userData.City}",
+                        cancellationToken: cancellationToken);
+                }
+                else
+                {
+                    await botClient.SendTextMessageAsync(
+                        chatId: chatId,
+                        text: "❌ Ошибка при регистрации. Попробуйте позже.",
+                        cancellationToken: cancellationToken);
+                }
+
+                _userStates.Remove(chatId);
+            }
+        }
+    }
+
+    private async Task<bool> RegisterUserInDatabase(UserData userData)
+    {
+        try
+        {
+            using (BaseContext db = new BaseContext())
+            {
+                // Формируем полное имя
+                string fullName = userData.FirstName;
+                if (!string.IsNullOrEmpty(userData.LastName))
+                {
+                    fullName += " " + userData.LastName;
+                }
+
+                var newUser = new API.Models.User
+                {
+                    Name = fullName,
+                    Age = userData.Age,
+                    TelegramTeg = userData.Username,
+                    CityNow = userData.City,
+                    CityLater = userData.City
+                };
+
+                db.Users.Add(newUser);
+                await db.SaveChangesAsync();
+
+                Console.WriteLine($"Пользователь {fullName} успешно сохранен в БД с ID: {newUser.Id}");
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ошибка при сохранении в БД: {ex.Message}");
+            return false;
         }
     }
 
@@ -83,12 +164,13 @@ public class Bot
         return Task.CompletedTask;
     }
 }
-
 public class UserData
 {
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
     public string Username { get; set; } = string.Empty;
     public string City { get; set; } = string.Empty;
+    public int Age { get; set; } = 0;
+    public bool IsWaitingForAge { get; set; } = false;
     public bool IsWaitingForCity { get; set; } = false;
 }

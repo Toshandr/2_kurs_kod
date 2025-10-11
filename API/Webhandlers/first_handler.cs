@@ -40,34 +40,42 @@ public class usersController : ControllerBase
         }
     }
 
-    [HttpPost]
-    public IActionResult UserRegistration()
+[HttpPost]
+public async Task<IActionResult> UserRegistration([FromBody] TelegramUserRequest request)
+{
+    try
     {
-        try
+        using (BaseContext db = new BaseContext())
         {
-            using (BaseContext db = new BaseContext())
+            var new_user = new User
             {
-                var new_user = new User
-                {
-                    Id = 14,
-                    Name = "Slava",
-                    Age = 18, //
-                    TelegramTeg = "@Vyachoga",
-                    CityNow = "Voronezh",
-                    CityLater = "Voronezh" //
-                };
+                Name = request.FirstName,
+                Age = request.Age, // Можно установить значение по умолчанию или запросить у пользователя
+                TelegramTeg = request.Username,
+                CityNow = request.City,
+                CityLater = request.City // Или запросить отдельно
+            };
 
-                db.Users.Add(new_user);
-                db.SaveChanges();
-                return Ok("Босс, он тут");
-            }
-        }
-        catch (Exception ex)
-        {
-            return BadRequest($"Oops... {ex.Message}");
+            db.Users.Add(new_user);
+            db.SaveChanges();
+            return Ok("Пользователь успешно зарегистрирован");
         }
     }
+    catch (Exception ex)
+    {
+        return BadRequest($"Ошибка регистрации: {ex.Message}");
+    }
+}
 
+// Модель для запроса из Telegram
+    public class TelegramUserRequest
+{
+    public string FirstName { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
+    public string Username { get; set; } = string.Empty;
+    public string City { get; set; } = string.Empty;
+    public int Age { get; set; } = 0; // По умолчанию 0, можно изменить
+}
 
     [HttpGet("stat")]
     public IActionResult Statistic()
