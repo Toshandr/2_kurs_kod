@@ -31,7 +31,8 @@ var cancellationTokenSource = new CancellationTokenSource();
 var botTask = Task.Run(() => botik.StartBotAsync(cancellationTokenSource.Token));
 
 Console.WriteLine("Запускаем бота и Web API...");
-
+var menu = new Menu();
+Menu.MainMenu();
 await app.RunAsync();
 
 cancellationTokenSource.Cancel();

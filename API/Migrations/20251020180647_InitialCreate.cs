@@ -21,7 +21,9 @@ namespace API.Migrations
                     age = table.Column<int>(type: "integer", nullable: false),
                     telegram_teg = table.Column<string>(type: "character varying", nullable: false),
                     city_now = table.Column<string>(type: "character varying", nullable: false),
-                    city_later = table.Column<string>(type: "character varying", nullable: false)
+                    city_later = table.Column<string>(type: "character varying", nullable: false),
+                    password = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    role = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true)
                 },
                 constraints: table =>
                 {

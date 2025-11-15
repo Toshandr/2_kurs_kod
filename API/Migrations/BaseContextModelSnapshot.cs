@@ -49,6 +49,16 @@ namespace API.Migrations
                         .HasColumnType("character varying")
                         .HasColumnName("name");
 
+                    b.Property<string>("Password")
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("password");
+
+                    b.Property<string>("Role")
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("role");
+
                     b.Property<string>("TelegramTeg")
                         .IsRequired()
                         .HasColumnType("character varying")

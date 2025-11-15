@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Migrations
 {
     [DbContext(typeof(BaseContext))]
-    [Migration("20251011092536_InitialCreate")]
+    [Migration("20251020180647_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -51,6 +51,16 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("character varying")
                         .HasColumnName("name");
+
+                    b.Property<string>("Password")
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("password");
+
+                    b.Property<string>("Role")
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("role");
 
                     b.Property<string>("TelegramTeg")
                         .IsRequired()

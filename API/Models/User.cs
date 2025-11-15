@@ -16,4 +16,14 @@ public partial class User
     public string CityNow { get; set; } = null!;
 
     public string CityLater { get; set; } = null!;
+
+    public string? Password { get; set; }
+
+    public string? Role { get; set; }
+}
+
+
+public class DTOUser()
+{
+    
 }

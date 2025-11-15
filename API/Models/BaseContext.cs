@@ -40,6 +40,12 @@ public partial class BaseContext : DbContext
             entity.Property(e => e.Name)
                 .HasColumnType("character varying")
                 .HasColumnName("name");
+            entity.Property(e => e.Password)
+                .HasMaxLength(255)
+                .HasColumnName("password");
+            entity.Property(e => e.Role)
+                .HasMaxLength(255)
+                .HasColumnName("role");
             entity.Property(e => e.TelegramTeg)
                 .HasColumnType("character varying")
                 .HasColumnName("telegram_teg");

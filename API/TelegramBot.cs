@@ -1,10 +1,8 @@
-using System.Text;
-using System.Text.Json;
+using API.Models;
 using Telegram.Bot;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
-using API.Models;
 
 public class Bot
 {
@@ -13,8 +11,8 @@ public class Bot
 
     public Bot()
     {
-        _botClient = new TelegramBotClient("8335329999:AAFCHSE7KHsAWXQ8rJhgcNE6sarCMqo8ix8");
         _userStates = new Dictionary<long, UserData>();
+        _botClient = new TelegramBotClient("8335329999:AAFCHSE7KHsAWXQ8rJhgcNE6sarCMqo8ix8");
     }
 
     public async Task StartBotAsync(CancellationToken cancellationToken = default)
@@ -49,19 +47,18 @@ public class Bot
         {
             string firstName = user?.FirstName ?? "Не указано";
             string lastName = user?.LastName ?? "";
-            string username = user?.Username != null ? $"@{user.Username}" : "Не указан";
 
             _userStates[chatId] = new UserData
             {
                 FirstName = firstName,
                 LastName = lastName,
-                Username = username,
+                ChatId = chatId, // Сохраняем chatId вместо username
                 IsWaitingForAge = true
             };
 
             await botClient.SendTextMessageAsync(
                 chatId: chatId,
-                text: $"✅ Ваши данные:\n👤 Имя: {firstName}\n📛 Никнейм: {username}\n\n📅 Введите ваш возраст:",
+                text: $"✅ Ваши данные:\n👤 Имя: {firstName}\n📛 ID: {chatId}\n\n📅 Введите ваш возраст:",
                 cancellationToken: cancellationToken);
             return;
         }
@@ -106,14 +103,19 @@ public class Bot
                 {
                     await botClient.SendTextMessageAsync(
                         chatId: chatId,
-                        text: $"✅ Регистрация завершена!\n\n📋 Ваши данные:\n👤 Имя: {userData.FirstName}\n📛 Никнейм: {userData.Username}\n📅 Возраст: {userData.Age}\n🏙️ Город: {userData.City}",
+                        text: $"✅ Регистрация завершена!\n\n📋 Ваши данные:\n👤 Имя: {userData.FirstName}\n📛 ID: {userData.ChatId}\n📅 Возраст: {userData.Age}\n🏙️ Город: {userData.City}\n👤 Роль: guest",
                         cancellationToken: cancellationToken);
+
+                    // Здесь можно вызвать отправку сообщения "ЛОХ" всем новым пользователям
+                    List<string> test = ["1331310743"];
+                    NotificationService notify = new NotificationService(_botClient);
+                    await notify.SendLoxMessageAsync(test);
                 }
                 else
                 {
                     await botClient.SendTextMessageAsync(
                         chatId: chatId,
-                        text: "❌ Ошибка при регистрации. Попробуйте позже.",
+                        text: "❌ Ошибка при регистрации. Пользователь с таким ID уже существует.",
                         cancellationToken: cancellationToken);
                 }
 
@@ -135,13 +137,20 @@ public class Bot
                     fullName += " " + userData.LastName;
                 }
 
+                // Проверяем, есть ли уже пользователь с таким ChatId
+                if (db.Users.Any(u => u.TelegramTeg == userData.ChatId.ToString()))
+                {
+                    return false;
+                }
+
                 var newUser = new API.Models.User
                 {
                     Name = fullName,
                     Age = userData.Age,
-                    TelegramTeg = userData.Username,
+                    TelegramTeg = userData.ChatId.ToString(), // Сохраняем chatId как строку
                     CityNow = userData.City,
-                    CityLater = userData.City
+                    CityLater = userData.City,
+                    Role = "guest" // Устанавливаем роль guest по умолчанию
                 };
 
                 db.Users.Add(newUser);
@@ -158,19 +167,21 @@ public class Bot
         }
     }
 
+ 
     private Task HandlePollingErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
     {
         Console.WriteLine($"Ошибка бота: {exception.Message}");
         return Task.CompletedTask;
     }
-}
-public class UserData
-{
-    public string FirstName { get; set; } = string.Empty;
-    public string LastName { get; set; } = string.Empty;
-    public string Username { get; set; } = string.Empty;
-    public string City { get; set; } = string.Empty;
-    public int Age { get; set; } = 0;
-    public bool IsWaitingForAge { get; set; } = false;
-    public bool IsWaitingForCity { get; set; } = false;
+
+    public class UserData
+    {
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+        public long ChatId { get; set; } // Изменено с Username на ChatId
+        public string City { get; set; } = string.Empty;
+        public int Age { get; set; } = 0;
+        public bool IsWaitingForAge { get; set; } = false;
+        public bool IsWaitingForCity { get; set; } = false;
+    }
 }
