@@ -12,22 +12,18 @@ public class NotificationService
         _botClient = botClient;
     }
 
-    public async Task SendLoxMessageAsync(List<string> users)
+    public async Task SendMessageToCityAsync(string city, string text)
     {
-        var tasks = new List<Task>();
+        var tasks = BD.SearchByCity(city);
         
-        foreach (var user in users)
+        foreach (var user in tasks)
         {
             // Асинхронная отправка сообщения каждому пользователю
-            var task = SendMessageToUserAsync(Convert.ToString(user), "Мишка Фредди знает, что ты не готовился к коллоквиуму");
-            tasks.Add(task);
+            _ = SendMessageToUserAsync(user.TelegramTeg, text);
         }
-
-        // Ожидаем завершения всех отправок
-        await Task.WhenAll(tasks);
     }
 
-    private async Task SendMessageToUserAsync(string chatId, string message)
+    public async Task SendMessageToUserAsync(string chatId, string message)
     {
         try
         {

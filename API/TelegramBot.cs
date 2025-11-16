@@ -6,13 +6,12 @@ using Telegram.Bot.Types.Enums;
 
 public class Bot
 {
-    private readonly TelegramBotClient _botClient;
+    public static readonly TelegramBotClient _botClient = new TelegramBotClient("8335329999:AAFCHSE7KHsAWXQ8rJhgcNE6sarCMqo8ix8");
     private readonly Dictionary<long, UserData> _userStates;
 
     public Bot()
     {
         _userStates = new Dictionary<long, UserData>();
-        _botClient = new TelegramBotClient("8335329999:AAFCHSE7KHsAWXQ8rJhgcNE6sarCMqo8ix8");
     }
 
     public async Task StartBotAsync(CancellationToken cancellationToken = default)
@@ -107,9 +106,9 @@ public class Bot
                         cancellationToken: cancellationToken);
 
                     // Здесь можно вызвать отправку сообщения "ЛОХ" всем новым пользователям
-                    List<string> test = ["1331310743"];
-                    NotificationService notify = new NotificationService(_botClient);
-                    await notify.SendLoxMessageAsync(test);
+                    //List<string> test = ["1331310743"];
+                   // NotificationService notify = new NotificationService(_botClient);
+                    //await notify.SendLoxMessageAsync(test);
                 }
                 else
                 {
