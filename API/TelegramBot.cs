@@ -1,0 +1,186 @@
+using API.Models;
+using Telegram.Bot;
+using Telegram.Bot.Polling;
+using Telegram.Bot.Types;
+using Telegram.Bot.Types.Enums;
+
+public class Bot
+{
+    public static readonly TelegramBotClient _botClient = new TelegramBotClient("8335329999:AAFCHSE7KHsAWXQ8rJhgcNE6sarCMqo8ix8");
+    private readonly Dictionary<long, UserData> _userStates;
+
+    public Bot()
+    {
+        _userStates = new Dictionary<long, UserData>();
+    }
+
+    public async Task StartBotAsync(CancellationToken cancellationToken = default)
+    {
+        var receiverOptions = new ReceiverOptions
+        {
+            AllowedUpdates = Array.Empty<UpdateType>()
+        };
+
+        _botClient.StartReceiving(
+            updateHandler: HandleUpdateAsync,
+            pollingErrorHandler: HandlePollingErrorAsync,
+            receiverOptions: receiverOptions,
+            cancellationToken: cancellationToken
+        );
+
+        var me = await _botClient.GetMeAsync();
+        Console.WriteLine($"Бот @{me.Username} запущен!");
+
+        await Task.Delay(-1, cancellationToken);
+    }
+
+    private async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
+    {
+        if (update.Message is not { } message)
+            return;
+
+        var chatId = message.Chat.Id;
+        var user = message.From;
+
+        if (message.Text == "/start")
+        {
+            string firstName = user?.FirstName ?? "Не указано";
+            string lastName = user?.LastName ?? "";
+
+            _userStates[chatId] = new UserData
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                ChatId = chatId, // Сохраняем chatId вместо username
+                IsWaitingForAge = true
+            };
+
+            await botClient.SendTextMessageAsync(
+                chatId: chatId,
+                text: $"✅ Ваши данные:\n👤 Имя: {firstName}\n📛 ID: {chatId}\n\n📅 Введите ваш возраст:",
+                cancellationToken: cancellationToken);
+            return;
+        }
+
+        if (_userStates.ContainsKey(chatId))
+        {
+            var userData = _userStates[chatId];
+
+            if (userData.IsWaitingForAge)
+            {
+                if (int.TryParse(message.Text, out int age) && age > 0 && age < 120)
+                {
+                    userData.Age = age;
+                    userData.IsWaitingForAge = false;
+                    userData.IsWaitingForCity = true;
+
+                    await botClient.SendTextMessageAsync(
+                        chatId: chatId,
+                        text: "🏙️ Теперь введите ваш город:",
+                        cancellationToken: cancellationToken);
+                }
+                else
+                {
+                    await botClient.SendTextMessageAsync(
+                        chatId: chatId,
+                        text: "❌ Пожалуйста, введите корректный возраст (число от 1 до 120):",
+                        cancellationToken: cancellationToken);
+                }
+                return;
+            }
+
+            if (userData.IsWaitingForCity)
+            {
+                string city = message.Text;
+                userData.City = city;
+                userData.IsWaitingForCity = false;
+
+                // Сохраняем пользователя напрямую в базу данных
+                bool registrationSuccess = await RegisterUserInDatabase(userData);
+
+                if (registrationSuccess)
+                {
+                    await botClient.SendTextMessageAsync(
+                        chatId: chatId,
+                        text: $"✅ Регистрация завершена!\n\n📋 Ваши данные:\n👤 Имя: {userData.FirstName}\n📛 ID: {userData.ChatId}\n📅 Возраст: {userData.Age}\n🏙️ Город: {userData.City}\n👤 Роль: guest",
+                        cancellationToken: cancellationToken);
+
+                    // Здесь можно вызвать отправку сообщения "ЛОХ" всем новым пользователям
+                    //List<string> test = ["1331310743"];
+                   // NotificationService notify = new NotificationService(_botClient);
+                    //await notify.SendLoxMessageAsync(test);
+                }
+                else
+                {
+                    await botClient.SendTextMessageAsync(
+                        chatId: chatId,
+                        text: "❌ Ошибка при регистрации. Пользователь с таким ID уже существует.",
+                        cancellationToken: cancellationToken);
+                }
+
+                _userStates.Remove(chatId);
+            }
+        }
+    }
+
+    private async Task<bool> RegisterUserInDatabase(UserData userData)
+    {
+        try
+        {
+            using (BaseContext db = new BaseContext())
+            {
+                // Формируем полное имя
+                string fullName = userData.FirstName;
+                if (!string.IsNullOrEmpty(userData.LastName))
+                {
+                    fullName += " " + userData.LastName;
+                }
+
+                // Проверяем, есть ли уже пользователь с таким ChatId
+                if (db.Users.Any(u => u.TelegramTeg == userData.ChatId.ToString()))
+                {
+                    return false;
+                }
+
+                var newUser = new API.Models.User
+                {
+                    Name = fullName,
+                    Age = userData.Age,
+                    TelegramTeg = userData.ChatId.ToString(), // Сохраняем chatId как строку
+                    CityNow = userData.City,
+                    CityLater = userData.City,
+                    Role = "guest" // Устанавливаем роль guest по умолчанию
+                };
+
+                db.Users.Add(newUser);
+                await db.SaveChangesAsync();
+
+                Console.WriteLine($"Пользователь {fullName} успешно сохранен в БД с ID: {newUser.Id}");
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ошибка при сохранении в БД: {ex.Message}");
+            return false;
+        }
+    }
+
+ 
+    private Task HandlePollingErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
+    {
+        Console.WriteLine($"Ошибка бота: {exception.Message}");
+        return Task.CompletedTask;
+    }
+
+    public class UserData
+    {
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+        public long ChatId { get; set; } // Изменено с Username на ChatId
+        public string City { get; set; } = string.Empty;
+        public int Age { get; set; } = 0;
+        public bool IsWaitingForAge { get; set; } = false;
+        public bool IsWaitingForCity { get; set; } = false;
+    }
+}
