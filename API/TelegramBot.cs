@@ -1,4 +1,6 @@
+using System.Linq;
 using API.Models;
+using Microsoft.Extensions.Configuration;
 using Telegram.Bot;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
@@ -9,10 +11,25 @@ public class Bot
     private static readonly Lazy<TelegramBotClient> _lazyBotClient = new Lazy<TelegramBotClient>(() =>
     {
         var token = Environment.GetEnvironmentVariable("TELEGRAM_BOT_TOKEN");
+        
+        // Fallback to appsettings.json if environment variable is not set
         if (string.IsNullOrEmpty(token))
         {
-            throw new InvalidOperationException("TELEGRAM_BOT_TOKEN environment variable is not set");
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
+                .AddEnvironmentVariables()
+                .Build();
+            
+            token = configuration["Token"] ?? configuration["TelegramBot:Token"];
         }
+        
+        if (string.IsNullOrEmpty(token))
+        {
+            throw new InvalidOperationException("TELEGRAM_BOT_TOKEN environment variable or Token in appsettings.json is not set");
+        }
+        
         return new TelegramBotClient(token);
     });
     
@@ -137,8 +154,16 @@ public class Bot
     {
         try
         {
+            Console.WriteLine($"Попытка сохранения пользователя: {userData.FirstName}, ChatId: {userData.ChatId}");
             using (BaseContext db = new BaseContext())
             {
+                // Проверяем подключение
+                if (!db.Database.CanConnect())
+                {
+                    Console.WriteLine("ОШИБКА: Не удалось подключиться к БД при регистрации пользователя!");
+                    return false;
+                }
+
                 // Формируем полное имя
                 string fullName = userData.FirstName;
                 if (!string.IsNullOrEmpty(userData.LastName))
@@ -147,8 +172,10 @@ public class Bot
                 }
 
                 // Проверяем, есть ли уже пользователь с таким ChatId
-                if (db.Users.Any(u => u.TelegramTeg == userData.ChatId.ToString()))
+                var existingUser = db.Users.FirstOrDefault(u => u.TelegramTeg == userData.ChatId.ToString());
+                if (existingUser != null)
                 {
+                    Console.WriteLine($"Пользователь с ChatId {userData.ChatId} уже существует в БД (ID: {existingUser.Id})");
                     return false;
                 }
 
@@ -163,15 +190,32 @@ public class Bot
                 };
 
                 db.Users.Add(newUser);
-                await db.SaveChangesAsync();
+                int savedCount = await db.SaveChangesAsync();
 
-                Console.WriteLine($"Пользователь {fullName} успешно сохранен в БД с ID: {newUser.Id}");
+                Console.WriteLine($"Пользователь {fullName} успешно сохранен в БД с ID: {newUser.Id} (сохранено записей: {savedCount})");
+                
+                // Проверяем, что пользователь действительно сохранился
+                var verifyUser = db.Users.FirstOrDefault(u => u.Id == newUser.Id);
+                if (verifyUser != null)
+                {
+                    Console.WriteLine($"Проверка: пользователь найден в БД - ID: {verifyUser.Id}, Name: {verifyUser.Name}");
+                }
+                else
+                {
+                    Console.WriteLine("ПРЕДУПРЕЖДЕНИЕ: Пользователь не найден после сохранения!");
+                }
+                
                 return true;
             }
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Ошибка при сохранении в БД: {ex.Message}");
+            Console.WriteLine($"StackTrace: {ex.StackTrace}");
+            if (ex.InnerException != null)
+            {
+                Console.WriteLine($"InnerException: {ex.InnerException.Message}");
+            }
             return false;
         }
     }

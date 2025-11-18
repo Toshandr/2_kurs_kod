@@ -135,3 +135,9 @@ C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\bin\Debug\net9.0\zh-Hant\Microsoft.
 C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\bin\Debug\net9.0\Telegram.Bot.dll
 C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\obj\Debug\net9.0\API.sourcelink.json
 C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\bin\Debug\net9.0\Newtonsoft.Json.dll
+C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\bin\Debug\net9.0\Castle.Core.dll
+C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\bin\Debug\net9.0\Moq.dll
+C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\bin\Debug\net9.0\xunit.abstractions.dll
+C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\bin\Debug\net9.0\xunit.assert.dll
+C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\bin\Debug\net9.0\xunit.core.dll
+C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\bin\Debug\net9.0\xunit.execution.dotnet.dll

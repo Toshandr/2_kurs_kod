@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Models;
@@ -18,7 +19,28 @@ public partial class BaseContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql(Environment.GetEnvironmentVariable("PATH_TO_DB"));
+    {
+        var connectionString = Environment.GetEnvironmentVariable("PATH_TO_DB");
+        if (string.IsNullOrEmpty(connectionString))
+        {
+            Console.WriteLine("WARNING: PATH_TO_DB environment variable is not set!");
+            throw new InvalidOperationException("PATH_TO_DB environment variable is not set");
+        }
+        var host = GetHostFromConnectionString(connectionString);
+        Console.WriteLine($"Подключение к БД: Host={host}");
+        optionsBuilder.UseNpgsql(connectionString);
+    }
+    
+    private static string GetHostFromConnectionString(string connectionString)
+    {
+        var parts = connectionString.Split(';');
+        var hostPart = parts.FirstOrDefault(p => p.StartsWith("Host=", StringComparison.OrdinalIgnoreCase));
+        if (hostPart != null)
+        {
+            return hostPart.Substring(5); // Убираем "Host="
+        }
+        return "unknown";
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

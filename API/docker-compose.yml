@@ -1,18 +1,50 @@
-version: '3.8'
-
 services:
-  telegram-bot:
-    build: .
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres-db
+    restart: unless-stopped
     environment:
-      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
-      - PATH_TO_DB=${PATH_TO_DB}
-      - ASPNETCORE_ENVIRONMENT=Production
+      POSTGRES_DB: base
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 55455901
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d base"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - api_network
+
+  api:
+    build:
+      context: .
+      dockerfile: dockerfile
+    container_name: api-telegram-bot
+    restart: unless-stopped
     ports:
       - "8080:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:80
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN:-8335329999:AAFCHSE7KHsAWXQ8rJhgcNE6sarCMqo8ix8}
+      - PATH_TO_DB=Host=postgres;Port=5432;Database=base;Username=postgres;Password=55455901
+    depends_on:
+      postgres:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
+    networks:
+      - api_network
 
+volumes:
+  postgres_data:
+    driver: local
 
-# # 1. Создай .env файл на сервере
-# echo "TELEGRAM_BOT_TOKEN=1234567890:ABCdefGHIjklMNOpqrsTUVwxyz" > .env
-
-# # 2. Запусти контейнер
-# docker-compose up -d
+networks:
+  api_network:
+    driver: bridge
