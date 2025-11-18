@@ -219,6 +219,7 @@ class Menu
     // ----------------------------------------------------------
     private static void SendWarningToUser()
     {
+        ShowAllUsers();
         Console.Write("Введите ID пользователя: ");
         if (!int.TryParse(Console.ReadLine(), out int id))
         {

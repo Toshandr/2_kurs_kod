@@ -79,6 +79,14 @@
             "Telegram.Bot": {
               "target": "Package",
               "version": "[19.0.0, )"
+            },
+            "moq": {
+              "target": "Package",
+              "version": "[4.20.72, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.9.3, )"
             }
           },
           "imports": [
