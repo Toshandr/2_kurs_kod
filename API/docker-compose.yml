@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  telegram-bot:
+    build: .
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - PATH_TO_DB=${PATH_TO_DB}
+      - ASPNETCORE_ENVIRONMENT=Production
+    ports:
+      - "8080:80"
+
+
+# # 1. Создай .env файл на сервере
+# echo "TELEGRAM_BOT_TOKEN=1234567890:ABCdefGHIjklMNOpqrsTUVwxyz" > .env
+
+# # 2. Запусти контейнер
+# docker-compose up -d

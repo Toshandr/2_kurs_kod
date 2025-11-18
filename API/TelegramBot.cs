@@ -6,14 +6,24 @@ using Telegram.Bot.Types.Enums;
 
 public class Bot
 {
-    public static readonly TelegramBotClient _botClient = new TelegramBotClient("8335329999:AAFCHSE7KHsAWXQ8rJhgcNE6sarCMqo8ix8");
+    private static readonly Lazy<TelegramBotClient> _lazyBotClient = new Lazy<TelegramBotClient>(() =>
+    {
+        var token = Environment.GetEnvironmentVariable("TELEGRAM_BOT_TOKEN");
+        if (string.IsNullOrEmpty(token))
+        {
+            throw new InvalidOperationException("TELEGRAM_BOT_TOKEN environment variable is not set");
+        }
+        return new TelegramBotClient(token);
+    });
+    
+    public static TelegramBotClient _botClient => _lazyBotClient.Value;
     private readonly Dictionary<long, UserData> _userStates;
 
     public Bot()
     {
         _userStates = new Dictionary<long, UserData>();
     }
-
+    
     public async Task StartBotAsync(CancellationToken cancellationToken = default)
     {
         var receiverOptions = new ReceiverOptions
