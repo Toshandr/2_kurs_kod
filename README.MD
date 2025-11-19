@@ -1,7 +1,7 @@
     # 🔔 Emergency Notification System - Система экстренных оповещений МЧС
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
-![.NET](https://img.shields.io/badge/.NET-8.0-purple.svg)
+![.NET](https://img.shields.io/badge/.NET-9.0-purple.svg)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15.0-blue.svg)
 ![Telegram](https://img.shields.io/badge/Telegram-Bot-32A2DB.svg)
 
