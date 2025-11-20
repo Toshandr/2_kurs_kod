@@ -22,8 +22,3 @@ public partial class User
     public string? Role { get; set; }
 }
 
-
-public class DTOUser()
-{
-    
-}
