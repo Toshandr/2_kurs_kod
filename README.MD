@@ -66,7 +66,7 @@ graph TB
     B --> C[🌐 ASP.NET Core API]
     C --> D[🔔 Notification Service]
     D --> E[🗄️ PostgreSQL]
-    D --> E[🗄️ Docker]
+    D --> L[🗄️ Docker]
     D --> F[⚡ Redis Cache]
     D --> G[🔁 Kafka Queue]
     H[👨‍💼 Админ Консоль] --> C
