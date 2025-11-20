@@ -1,4 +1,5 @@
 using API.Models;
+using API.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
@@ -65,16 +66,6 @@ public async Task<IActionResult> UserRegistration([FromBody] TelegramUserRequest
     {
         return BadRequest($"Ошибка регистрации: {ex.Message}");
     }
-}
-
-// Модель для запроса из Telegram
-    public class TelegramUserRequest
-{
-    public string FirstName { get; set; } = string.Empty;
-    public string LastName { get; set; } = string.Empty;
-    public string Username { get; set; } = string.Empty;
-    public string City { get; set; } = string.Empty;
-    public int Age { get; set; } = 0; // По умолчанию 0, можно изменить
 }
 
     [HttpGet("stat")]

@@ -141,3 +141,11 @@ C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\bin\Debug\net9.0\xunit.abstractions
 C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\bin\Debug\net9.0\xunit.assert.dll
 C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\bin\Debug\net9.0\xunit.core.dll
 C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\bin\Debug\net9.0\xunit.execution.dotnet.dll
+C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\bin\Debug\net9.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\bin\Debug\net9.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\bin\Debug\net9.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\bin\Debug\net9.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
