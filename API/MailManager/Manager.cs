@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Telegram.Bot;
 
+using API.Models;
+
 public class NotificationService
 {
     private readonly ITelegramBotClient _botClient;
@@ -31,10 +33,16 @@ public class NotificationService
                 chatId: chatId,
                 text: message);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             // Логирование ошибок (пользователь заблокировал бота и т.д.)
-            Console.WriteLine($"Не удалось отправить сообщение {chatId}: {ex.Message}");
+            using(BaseContext db = new BaseContext())
+            {
+                var i = db.Users.FirstOrDefault(i => i.TelegramTeg == chatId);
+                db.Users.Remove(i);
+                await db.SaveChangesAsync();
+                Console.WriteLine($"Пользователь: {i.Name} с таким чатом ID: {chatId} был удален так как пользователь заблокировал бота или удалил чат.");
+            }
         }
     }
 }
