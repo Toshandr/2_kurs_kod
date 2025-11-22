@@ -231,7 +231,7 @@ public class Bot
     {
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
-        public long ChatId { get; set; } // Изменено с Username на ChatId
+        public long ChatId { get; set; } 
         public string City { get; set; } = string.Empty;
         public int Age { get; set; } = 0;
         public bool IsWaitingForAge { get; set; } = false;

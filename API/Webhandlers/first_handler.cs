@@ -51,10 +51,10 @@ public async Task<IActionResult> UserRegistration([FromBody] TelegramUserRequest
             var new_user = new User
             {
                 Name = request.FirstName,
-                Age = request.Age, // Можно установить значение по умолчанию или запросить у пользователя
+                Age = request.Age, 
                 TelegramTeg = request.Username,
                 CityNow = request.City,
-                CityLater = request.City // Или запросить отдельно
+                CityLater = request.City 
             };
 
             db.Users.Add(new_user);

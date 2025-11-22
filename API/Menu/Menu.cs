@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using API.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Telegram.Bot;
@@ -188,7 +189,7 @@ class Menu
                 break;
 
             case 2:
-                SendWarningToUser();
+                _ = SendWarningToUser();
                 break;
 
             case 3:
@@ -217,7 +218,7 @@ class Menu
     // ----------------------------------------------------------
     //       ОТПРАВКА ПОЛЬЗОВАТЕЛЮ
     // ----------------------------------------------------------
-    private static void SendWarningToUser()
+    private static async Task SendWarningToUser()
     {
         Console.Write("Введите ID пользователя: ");
         if (!int.TryParse(Console.ReadLine(), out int id))
@@ -232,7 +233,7 @@ class Menu
         NotificationService notify = new NotificationService(Bot._botClient);
         string? us_id = BD.SearchUser(id);
         if(us_id != null){
-            _ = notify.SendMessageToUserAsync(us_id, msg);
+            await notify.SendMessageToUserAsync(us_id, msg);
 
             Console.WriteLine("Сообщение отправлено.");
             Console.WriteLine("Нажмите Enter...");
