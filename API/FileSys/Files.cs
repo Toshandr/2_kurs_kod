@@ -7,10 +7,43 @@ namespace API.FileSys;
 /// </summary>
 public sealed class FileSystem
 {
-    private static readonly string BaseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+    // Определяем базовую директорию в зависимости от окружения
+    private static readonly string BaseDirectory = GetBaseDirectory();
     private static readonly string LogDirectory = Path.Combine(BaseDirectory, "logs", "System");
     private static readonly string LogFilePath = Path.Combine(LogDirectory, "System.txt");
     private static readonly object _lock = new object();
+
+    private static string GetBaseDirectory()
+    {
+        // Проверяем, запущено ли приложение в Docker (путь начинается с /app)
+        var currentDir = AppDomain.CurrentDomain.BaseDirectory;
+        
+        if (currentDir.StartsWith("/app"))
+        {
+            // В Docker используем /app/logs
+            return "/app";
+        }
+        else
+        {
+            // Локально - ищем папку API в структуре проекта
+            var apiDir = currentDir;
+            while (!string.IsNullOrEmpty(apiDir) && !Directory.Exists(Path.Combine(apiDir, "API")))
+            {
+                apiDir = Path.GetDirectoryName(apiDir);
+            }
+            
+            if (!string.IsNullOrEmpty(apiDir) && Directory.Exists(Path.Combine(apiDir, "API")))
+            {
+                return Path.Combine(apiDir, "API");
+            }
+            
+            // Если не нашли, используем текущую директорию
+            return currentDir;
+        }
+    }
+
+    // Публичный метод для использования в FileUser
+    public static string GetBaseDirectoryPublic() => GetBaseDirectory();
 
     /// <summary>
     /// Записывает ошибку в системный лог
@@ -87,7 +120,8 @@ public sealed class FileSystem
 /// </summary>
 public sealed class FileUser
 {
-    private static readonly string BaseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+    // Используем ту же базовую директорию, что и FileSystem
+    private static readonly string BaseDirectory = FileSystem.GetBaseDirectoryPublic();
     private static readonly string LogDirectory = Path.Combine(BaseDirectory, "logs", "Users");
     private static readonly object _lock = new object();
 

@@ -33,6 +33,8 @@ services:
       - ASPNETCORE_URLS=http://+:80
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN:-8335329999:AAFCHSE7KHsAWXQ8rJhgcNE6sarCMqo8ix8}
       - PATH_TO_DB=Host=postgres;Port=5432;Database=base;Username=postgres;Password=55455901
+    volumes:
+      - ./logs:/app/logs
     depends_on:
       postgres:
         condition: service_healthy
