@@ -7,7 +7,8 @@ namespace API.FileSys;
 /// </summary>
 public sealed class FileSystem
 {
-    private static readonly string LogDirectory = Path.Combine("logs", "System");
+    private static readonly string BaseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+    private static readonly string LogDirectory = Path.Combine(BaseDirectory, "logs", "System");
     private static readonly string LogFilePath = Path.Combine(LogDirectory, "System.txt");
     private static readonly object _lock = new object();
 
@@ -22,6 +23,7 @@ public sealed class FileSystem
             if (!Directory.Exists(LogDirectory))
             {
                 Directory.CreateDirectory(LogDirectory);
+                Console.WriteLine($"[FileSystem] Создана директория: {LogDirectory}");
             }
 
             var logEntry = new StringBuilder();
@@ -50,7 +52,7 @@ public sealed class FileSystem
         catch (Exception ex)
         {
             // Если не можем записать в файл, выводим в консоль
-            Console.WriteLine($"Ошибка записи в лог-файл: {ex.Message}");
+            Console.WriteLine($"[FileSystem] Ошибка записи в лог-файл: {ex.Message}");
         }
     }
 
@@ -85,7 +87,8 @@ public sealed class FileSystem
 /// </summary>
 public sealed class FileUser
 {
-    private static readonly string LogDirectory = Path.Combine("logs", "Users");
+    private static readonly string BaseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+    private static readonly string LogDirectory = Path.Combine(BaseDirectory, "logs", "Users");
     private static readonly object _lock = new object();
 
     /// <summary>
@@ -102,6 +105,7 @@ public sealed class FileUser
             if (!Directory.Exists(LogDirectory))
             {
                 Directory.CreateDirectory(LogDirectory);
+                Console.WriteLine($"[FileUser] Создана директория: {LogDirectory}");
             }
 
             // Формируем имя файла: chatId_ФИО.txt
@@ -109,12 +113,29 @@ public sealed class FileUser
             string fileName = $"{chatId}_{sanitizedUserName}.txt";
             string filePath = Path.Combine(LogDirectory, fileName);
 
-            // Формируем запись с временем
-            var logEntry = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {message}\n";
-
-            // Потокобезопасная запись в файл
+            // Если файл не существует, создаем его с базовой информацией
             lock (_lock)
             {
+                if (!File.Exists(filePath))
+                {
+                    Console.WriteLine($"[FileUser] Файл не существует, создаю новый: {filePath}");
+                    
+                    var initialContent = new StringBuilder();
+                    initialContent.AppendLine($"=== История чата пользователя ===");
+                    initialContent.AppendLine($"Имя: {userName}");
+                    initialContent.AppendLine($"Chat ID: {chatId}");
+                    initialContent.AppendLine($"Дата создания файла: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
+                    initialContent.AppendLine($"Примечание: Файл создан автоматически при первом сообщении");
+                    initialContent.AppendLine(new string('=', 50));
+                    initialContent.AppendLine();
+                    
+                    File.WriteAllText(filePath, initialContent.ToString());
+                    Console.WriteLine($"[FileUser] ✓ Файл успешно создан для {userName}");
+                    FileSystem.LogInfo($"Автоматически создан файл истории для пользователя {userName} (ChatId: {chatId})");
+                }
+
+                // Формируем запись с временем
+                var logEntry = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {message}\n";
                 File.AppendAllText(filePath, logEntry);
             }
 
@@ -123,7 +144,7 @@ public sealed class FileUser
         catch (Exception ex)
         {
             FileSystem.LogError($"Ошибка записи сообщения пользователя {userName} (ChatId: {chatId})", ex);
-            Console.WriteLine($"Ошибка записи в файл пользователя: {ex.Message}");
+            Console.WriteLine($"[FileUser] ✗ Ошибка записи в файл пользователя: {ex.Message}");
         }
     }
 
@@ -137,11 +158,14 @@ public sealed class FileUser
             if (!Directory.Exists(LogDirectory))
             {
                 Directory.CreateDirectory(LogDirectory);
+                Console.WriteLine($"[FileUser] Создана директория: {LogDirectory}");
             }
 
             string sanitizedUserName = SanitizeFileName(userName);
             string fileName = $"{chatId}_{sanitizedUserName}.txt";
             string filePath = Path.Combine(LogDirectory, fileName);
+
+            Console.WriteLine($"[FileUser] Создание файла: {filePath}");
 
             var initialContent = new StringBuilder();
             initialContent.AppendLine($"=== История чата пользователя ===");
@@ -158,12 +182,13 @@ public sealed class FileUser
                 File.WriteAllText(filePath, initialContent.ToString());
             }
 
+            Console.WriteLine($"[FileUser] ✓ Файл успешно создан для {userName}");
             FileSystem.LogInfo($"Создан файл истории для пользователя {userName} (ChatId: {chatId})");
         }
         catch (Exception ex)
         {
             FileSystem.LogError($"Ошибка создания файла для пользователя {userName} (ChatId: {chatId})", ex);
-            Console.WriteLine($"Ошибка создания файла пользователя: {ex.Message}");
+            Console.WriteLine($"[FileUser] ✗ Ошибка создания файла пользователя: {ex.Message}");
         }
     }
 
