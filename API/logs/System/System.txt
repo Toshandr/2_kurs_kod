@@ -1,0 +1,82 @@
+[2025-11-24 19:53:08] ERROR:
+Ошибка подключения к БД (попытка 1/5)
+Exception: PATH_TO_DB environment variable is not set
+StackTrace:    at API.Models.BaseContext.OnConfiguring(DbContextOptionsBuilder optionsBuilder) in C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\Models\BaseContext.cs:line 27
+   at Microsoft.EntityFrameworkCore.DbContext.get_ContextServices()
+   at Microsoft.EntityFrameworkCore.DbContext.get_InternalServiceProvider()
+   at Microsoft.EntityFrameworkCore.DbContext.Microsoft.EntityFrameworkCore.Infrastructure.IInfrastructure<System.IServiceProvider>.get_Instance()
+   at Microsoft.EntityFrameworkCore.Infrastructure.Internal.InfrastructureExtensions.GetService(IInfrastructure`1 accessor, Type serviceType)
+   at Microsoft.EntityFrameworkCore.Infrastructure.Internal.InfrastructureExtensions.GetService[TService](IInfrastructure`1 accessor)
+   at Microsoft.EntityFrameworkCore.Infrastructure.AccessorExtensions.GetService[TService](IInfrastructure`1 accessor)
+   at Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.get_Dependencies()
+   at Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.CanConnect()
+   at Program.<Main>$(String[] args) in C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\Program.cs:line 101
+--------------------------------------------------------------------------------
+[2025-11-24 19:53:11] ERROR:
+Ошибка подключения к БД (попытка 2/5)
+Exception: PATH_TO_DB environment variable is not set
+StackTrace:    at API.Models.BaseContext.OnConfiguring(DbContextOptionsBuilder optionsBuilder) in C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\Models\BaseContext.cs:line 27
+   at Microsoft.EntityFrameworkCore.DbContext.get_ContextServices()
+   at Microsoft.EntityFrameworkCore.DbContext.get_InternalServiceProvider()
+   at Microsoft.EntityFrameworkCore.DbContext.Microsoft.EntityFrameworkCore.Infrastructure.IInfrastructure<System.IServiceProvider>.get_Instance()
+   at Microsoft.EntityFrameworkCore.Infrastructure.Internal.InfrastructureExtensions.GetService(IInfrastructure`1 accessor, Type serviceType)
+   at Microsoft.EntityFrameworkCore.Infrastructure.Internal.InfrastructureExtensions.GetService[TService](IInfrastructure`1 accessor)
+   at Microsoft.EntityFrameworkCore.Infrastructure.AccessorExtensions.GetService[TService](IInfrastructure`1 accessor)
+   at Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.get_Dependencies()
+   at Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.CanConnect()
+   at Program.<Main>$(String[] args) in C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\Program.cs:line 101
+--------------------------------------------------------------------------------
+[2025-11-24 19:53:14] ERROR:
+Ошибка подключения к БД (попытка 3/5)
+Exception: PATH_TO_DB environment variable is not set
+StackTrace:    at API.Models.BaseContext.OnConfiguring(DbContextOptionsBuilder optionsBuilder) in C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\Models\BaseContext.cs:line 27
+   at Microsoft.EntityFrameworkCore.DbContext.get_ContextServices()
+   at Microsoft.EntityFrameworkCore.DbContext.get_InternalServiceProvider()
+   at Microsoft.EntityFrameworkCore.DbContext.Microsoft.EntityFrameworkCore.Infrastructure.IInfrastructure<System.IServiceProvider>.get_Instance()
+   at Microsoft.EntityFrameworkCore.Infrastructure.Internal.InfrastructureExtensions.GetService(IInfrastructure`1 accessor, Type serviceType)
+   at Microsoft.EntityFrameworkCore.Infrastructure.Internal.InfrastructureExtensions.GetService[TService](IInfrastructure`1 accessor)
+   at Microsoft.EntityFrameworkCore.Infrastructure.AccessorExtensions.GetService[TService](IInfrastructure`1 accessor)
+   at Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.get_Dependencies()
+   at Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.CanConnect()
+   at Program.<Main>$(String[] args) in C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\Program.cs:line 101
+--------------------------------------------------------------------------------
+[2025-11-24 19:53:17] ERROR:
+Ошибка подключения к БД (попытка 4/5)
+Exception: PATH_TO_DB environment variable is not set
+StackTrace:    at API.Models.BaseContext.OnConfiguring(DbContextOptionsBuilder optionsBuilder) in C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\Models\BaseContext.cs:line 27
+   at Microsoft.EntityFrameworkCore.DbContext.get_ContextServices()
+   at Microsoft.EntityFrameworkCore.DbContext.get_InternalServiceProvider()
+   at Microsoft.EntityFrameworkCore.DbContext.Microsoft.EntityFrameworkCore.Infrastructure.IInfrastructure<System.IServiceProvider>.get_Instance()
+   at Microsoft.EntityFrameworkCore.Infrastructure.Internal.InfrastructureExtensions.GetService(IInfrastructure`1 accessor, Type serviceType)
+   at Microsoft.EntityFrameworkCore.Infrastructure.Internal.InfrastructureExtensions.GetService[TService](IInfrastructure`1 accessor)
+   at Microsoft.EntityFrameworkCore.Infrastructure.AccessorExtensions.GetService[TService](IInfrastructure`1 accessor)
+   at Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.get_Dependencies()
+   at Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.CanConnect()
+   at Program.<Main>$(String[] args) in C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\Program.cs:line 101
+--------------------------------------------------------------------------------
+[2025-11-24 19:53:20] ERROR:
+Ошибка подключения к БД (попытка 5/5)
+Exception: PATH_TO_DB environment variable is not set
+StackTrace:    at API.Models.BaseContext.OnConfiguring(DbContextOptionsBuilder optionsBuilder) in C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\Models\BaseContext.cs:line 27
+   at Microsoft.EntityFrameworkCore.DbContext.get_ContextServices()
+   at Microsoft.EntityFrameworkCore.DbContext.get_InternalServiceProvider()
+   at Microsoft.EntityFrameworkCore.DbContext.Microsoft.EntityFrameworkCore.Infrastructure.IInfrastructure<System.IServiceProvider>.get_Instance()
+   at Microsoft.EntityFrameworkCore.Infrastructure.Internal.InfrastructureExtensions.GetService(IInfrastructure`1 accessor, Type serviceType)
+   at Microsoft.EntityFrameworkCore.Infrastructure.Internal.InfrastructureExtensions.GetService[TService](IInfrastructure`1 accessor)
+   at Microsoft.EntityFrameworkCore.Infrastructure.AccessorExtensions.GetService[TService](IInfrastructure`1 accessor)
+   at Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.get_Dependencies()
+   at Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.CanConnect()
+   at Program.<Main>$(String[] args) in C:\Users\MSI ThinGF63\Desktop\2_kurs_kod\API\Program.cs:line 101
+--------------------------------------------------------------------------------
+[2025-11-24 19:53:38] ERROR:
+Тестовая ошибка системы
+Exception: Это тестовое исключение
+StackTrace: 
+--------------------------------------------------------------------------------
+[2025-11-24 19:53:38] INFO: Тестовое информационное сообщение
+[2025-11-24 19:53:38] INFO: Создан файл истории для пользователя Иван Иванов (ChatId: 123456789)
+[2025-11-24 19:53:38] INFO: Сообщение пользователя Иван Иванов (ChatId: 123456789) записано в файл
+[2025-11-24 19:53:38] INFO: Сообщение пользователя Иван Иванов (ChatId: 123456789) записано в файл
+[2025-11-24 19:53:38] INFO: Сообщение пользователя Иван Иванов (ChatId: 123456789) записано в файл
+[2025-11-24 19:53:38] INFO: Сообщение пользователя Иван Иванов (ChatId: 123456789) записано в файл
+[2025-11-24 19:53:38] INFO: Создан файл истории для пользователя Петр/Петров\Тест:Символы (ChatId: 987654321)

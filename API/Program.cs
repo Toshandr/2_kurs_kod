@@ -135,6 +135,7 @@ for (int attempt = 1; attempt <= maxRetries; attempt++)
                     catch (Exception ex)
                     {
                         Console.WriteLine($"Ошибка при применении миграций: {ex.Message}");
+                        API.FileSys.FileSystem.LogError("Ошибка при применении миграций БД", ex);
                         if (ex.InnerException != null)
                         {
                             Console.WriteLine($"InnerException: {ex.InnerException.Message}");
@@ -184,6 +185,7 @@ for (int attempt = 1; attempt <= maxRetries; attempt++)
                             catch (Exception markEx)
                             {
                                 Console.WriteLine($"Ошибка при пометке миграций: {markEx.Message}");
+                                API.FileSys.FileSystem.LogError("Ошибка при пометке миграций", markEx);
                                 throw;
                             }
                         }
@@ -228,6 +230,8 @@ for (int attempt = 1; attempt <= maxRetries; attempt++)
     catch (Exception ex)
     {
         Console.WriteLine($"Ошибка при попытке {attempt}/{maxRetries}: {ex.Message}");
+        API.FileSys.FileSystem.LogError($"Ошибка подключения к БД (попытка {attempt}/{maxRetries})", ex);
+        
         if (attempt < maxRetries)
         {
             Console.WriteLine($"Ожидание {retryDelay / 1000} секунд перед следующей попыткой...");

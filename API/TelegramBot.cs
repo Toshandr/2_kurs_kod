@@ -1,5 +1,6 @@
 using System.Linq;
 using API.Models;
+using API.FileSys;
 using Microsoft.Extensions.Configuration;
 using Telegram.Bot;
 using Telegram.Bot.Polling;
@@ -68,6 +69,10 @@ public class Bot
 
         var chatId = message.Chat.Id;
         var user = message.From;
+        
+        // Логируем все входящие сообщения
+        string userName = $"{user?.FirstName ?? "Unknown"} {user?.LastName ?? ""}".Trim();
+        FileUser.LogUserMessage(chatId, userName, $"Входящее: {message.Text}");
 
         if (message.Text == "/start")
         {
@@ -82,10 +87,13 @@ public class Bot
                 IsWaitingForAge = true
             };
 
+            var responseText = $"✅ Ваши данные:\n👤 Имя: {firstName}\n📛 ID: {chatId}\n\n📅 Введите ваш возраст:";
             await botClient.SendTextMessageAsync(
                 chatId: chatId,
-                text: $"✅ Ваши данные:\n👤 Имя: {firstName}\n📛 ID: {chatId}\n\n📅 Введите ваш возраст:",
+                text: responseText,
                 cancellationToken: cancellationToken);
+            
+            FileUser.LogUserMessage(chatId, $"{firstName} {lastName}".Trim(), $"Исходящее: {responseText}");
             return;
         }
 
@@ -101,17 +109,23 @@ public class Bot
                     userData.IsWaitingForAge = false;
                     userData.IsWaitingForCity = true;
 
+                    var responseText = "🏙️ Теперь введите ваш город:";
                     await botClient.SendTextMessageAsync(
                         chatId: chatId,
-                        text: "🏙️ Теперь введите ваш город:",
+                        text: responseText,
                         cancellationToken: cancellationToken);
+                    
+                    FileUser.LogUserMessage(chatId, $"{userData.FirstName} {userData.LastName}".Trim(), $"Исходящее: {responseText}");
                 }
                 else
                 {
+                    var responseText = "❌ Пожалуйста, введите корректный возраст (число от 1 до 120):";
                     await botClient.SendTextMessageAsync(
                         chatId: chatId,
-                        text: "❌ Пожалуйста, введите корректный возраст (число от 1 до 120):",
+                        text: responseText,
                         cancellationToken: cancellationToken);
+                    
+                    FileUser.LogUserMessage(chatId, $"{userData.FirstName} {userData.LastName}".Trim(), $"Исходящее: {responseText}");
                 }
                 return;
             }
@@ -127,10 +141,17 @@ public class Bot
 
                 if (registrationSuccess)
                 {
+                    // Создаем файл истории для нового пользователя
+                    string fullName = $"{userData.FirstName} {userData.LastName}".Trim();
+                    FileUser.CreateUserFile(userData.ChatId, fullName, userData.Age, userData.City);
+                    
+                    var responseText = $"✅ Регистрация завершена!\n\n📋 Ваши данные:\n👤 Имя: {userData.FirstName}\n📛 ID: {userData.ChatId}\n📅 Возраст: {userData.Age}\n🏙️ Город: {userData.City}\n👤 Роль: guest";
                     await botClient.SendTextMessageAsync(
                         chatId: chatId,
-                        text: $"✅ Регистрация завершена!\n\n📋 Ваши данные:\n👤 Имя: {userData.FirstName}\n📛 ID: {userData.ChatId}\n📅 Возраст: {userData.Age}\n🏙️ Город: {userData.City}\n👤 Роль: guest",
+                        text: responseText,
                         cancellationToken: cancellationToken);
+                    
+                    FileUser.LogUserMessage(chatId, fullName, $"Исходящее: {responseText}");
 
                     // Здесь можно вызвать отправку сообщения "ЛОХ" всем новым пользователям
                     //List<string> test = ["1331310743"];
@@ -139,10 +160,13 @@ public class Bot
                 }
                 else
                 {
+                    var responseText = "❌ Ошибка при регистрации. Пользователь с таким ID уже существует.";
                     await botClient.SendTextMessageAsync(
                         chatId: chatId,
-                        text: "❌ Ошибка при регистрации. Пользователь с таким ID уже существует.",
+                        text: responseText,
                         cancellationToken: cancellationToken);
+                    
+                    FileUser.LogUserMessage(chatId, $"{userData.FirstName} {userData.LastName}".Trim(), $"Исходящее: {responseText}");
                 }
 
                 _userStates.Remove(chatId);
@@ -212,6 +236,7 @@ public class Bot
         {
             Console.WriteLine($"Ошибка при сохранении в БД: {ex.Message}");
             Console.WriteLine($"StackTrace: {ex.StackTrace}");
+            FileSystem.LogError($"Ошибка регистрации пользователя {userData.FirstName} в БД", ex);
             if (ex.InnerException != null)
             {
                 Console.WriteLine($"InnerException: {ex.InnerException.Message}");
@@ -224,6 +249,7 @@ public class Bot
     private Task HandlePollingErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
     {
         Console.WriteLine($"Ошибка бота: {exception.Message}");
+        FileSystem.LogError("Ошибка Telegram бота", exception);
         return Task.CompletedTask;
     }
 

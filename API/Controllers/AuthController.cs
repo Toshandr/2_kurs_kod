@@ -74,6 +74,7 @@ public class AuthController : ControllerBase
         }
         catch (Exception ex)
         {
+            API.FileSys.FileSystem.LogError($"Ошибка входа пользователя {request.Username}", ex);
             return BadRequest(new { message = $"Ошибка входа: {ex.Message}" });
         }
     }
@@ -135,6 +136,7 @@ public class AuthController : ControllerBase
         }
         catch (Exception ex)
         {
+            API.FileSys.FileSystem.LogError($"Ошибка регистрации пользователя {request.Name}", ex);
             return BadRequest(new { message = $"Ошибка регистрации: {ex.Message}" });
         }
     }
