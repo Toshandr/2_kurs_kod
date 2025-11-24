@@ -102,7 +102,7 @@ public class AuthController : ControllerBase
                     Password = !string.IsNullOrEmpty(request.Password) 
                         ? HashPassword(request.Password) 
                         : null,
-                    Role = request.Role ?? "User",
+                    Role = request.Role ?? "guest",
                     Age = request.Age,
                     CityNow = request.CityNow ?? "",
                     CityLater = request.CityLater ?? ""
