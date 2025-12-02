@@ -3427,3 +3427,57 @@ StackTrace:    at Telegram.Bot.TelegramBotClient.MakeRequestAsync[TResponse](IRe
 --------------------------------------------------------------------------------
 [2025-12-02 18:15:50] INFO: Автоматически создан файл истории для пользователя Anton Nekhlopochin (ChatId: 2108637904)
 [2025-12-02 18:15:50] INFO: Сообщение пользователя Anton Nekhlopochin (ChatId: 2108637904) записано в файл
+[2025-12-02 19:16:16] INFO: Сообщение пользователя Anton Nekhlopochin (ChatId: 2108637904) записано в файл
+[2025-12-02 19:18:57] ERROR:
+Ошибка создания пользователя
+Exception: An error occurred while saving the entity changes. See the inner exception for details.
+StackTrace:    at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(StateManager stateManager, Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.<>c.<SaveChanges>b__112_0(DbContext _, ValueTuple`2 t)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges()
+   at API.Handlers.UsersHandler.CreateUser(String name, Int32 age, String telegramTag, String cityNow, String cityLater, String role) in /src/Handlers/UsersHandler.cs:line 48
+   at API.Controllers.UsersController.CreateUser(TelegramUserRequest request) in /src/Controllers/UsersController.cs:line 106
+InnerException: 23505: duplicate key value violates unique constraint "users_pkey"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+--------------------------------------------------------------------------------
+[2025-12-02 19:19:31] ERROR:
+Ошибка создания пользователя
+Exception: An error occurred while saving the entity changes. See the inner exception for details.
+StackTrace:    at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(StateManager stateManager, Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.<>c.<SaveChanges>b__112_0(DbContext _, ValueTuple`2 t)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges()
+   at API.Handlers.UsersHandler.CreateUser(String name, Int32 age, String telegramTag, String cityNow, String cityLater, String role) in /src/Handlers/UsersHandler.cs:line 48
+   at API.Controllers.UsersController.CreateUser(TelegramUserRequest request) in /src/Controllers/UsersController.cs:line 106
+InnerException: 23505: duplicate key value violates unique constraint "users_pkey"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+--------------------------------------------------------------------------------
+[2025-12-02 19:24:11] INFO: Сообщение пользователя Роман (ChatId: 2116208057) записано в файл
+[2025-12-02 19:24:30] INFO: Сообщение пользователя Роман (ChatId: 2116208057) записано в файл
+[2025-12-02 19:49:21] INFO: Сообщение пользователя Anton Nekhlopochin (ChatId: 2108637904) записано в файл
+[2025-12-02 19:57:38] INFO: Сообщение пользователя Anton Nekhlopochin (ChatId: 2108637904) записано в файл
+[2025-12-02 19:59:37] INFO: Автоматически создан файл истории для пользователя Vyacheslav (ChatId: 1331310743)
+[2025-12-02 19:59:38] INFO: Сообщение пользователя Vyacheslav (ChatId: 1331310743) записано в файл
+[2025-12-02 19:59:38] INFO: Сообщение пользователя Vyacheslav (ChatId: 1331310743) записано в файл
+[2025-12-02 19:59:43] INFO: Сообщение пользователя Vyacheslav (ChatId: 1331310743) записано в файл
+[2025-12-02 19:59:44] INFO: Сообщение пользователя Vyacheslav (ChatId: 1331310743) записано в файл
+[2025-12-02 19:59:48] INFO: Сообщение пользователя Vyacheslav (ChatId: 1331310743) записано в файл
+[2025-12-02 19:59:48] INFO: Сообщение пользователя Vyacheslav (ChatId: 1331310743) записано в файл
+[2025-12-02 19:59:55] INFO: Сообщение пользователя Vyacheslav (ChatId: 1331310743) записано в файл
+[2025-12-02 20:00:23] INFO: Сообщение пользователя Vyacheslav (ChatId: 1331310743) записано в файл
+[2025-12-02 20:00:34] INFO: Сообщение пользователя Vyacheslav (ChatId: 1331310743) записано в файл
+[2025-12-02 20:01:06] INFO: Сообщение пользователя Vyacheslav (ChatId: 1331310743) записано в файл

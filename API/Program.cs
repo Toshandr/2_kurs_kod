@@ -18,7 +18,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+    });
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
@@ -80,6 +84,17 @@ builder.Services.AddAuthentication(options =>
 
 // Регистрация сервиса для генерации JWT токенов
 builder.Services.AddScoped<JwtService>();
+
+// Настройка CORS для фронтенда
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000", "http://localhost:3001")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
 
@@ -252,6 +267,8 @@ for (int attempt = 1; attempt <= maxRetries; attempt++)
 app.UseSwagger();
 app.UseSwaggerUI();
 
+app.UseCors("AllowFrontend");
+
 app.UseRouting();
 
 app.UseAuthentication();
@@ -266,8 +283,14 @@ var cancellationTokenSource = new CancellationTokenSource();
 var botTask = Task.Run(() => botik.StartBotAsync(cancellationTokenSource.Token));
 
 Console.WriteLine("Запускаем бота и Web API...");
-var menu = new Menu();
-Menu.MainMenu();
+
+// Меню только для локальной разработки, не для Docker
+if (app.Environment.IsDevelopment() && !Environment.GetEnvironmentVariable("RUNNING_IN_DOCKER")?.Equals("true", StringComparison.OrdinalIgnoreCase) == true)
+{
+    var menu = new Menu();
+    Menu.MainMenu();
+}
+
 await app.RunAsync();
 
 cancellationTokenSource.Cancel();
