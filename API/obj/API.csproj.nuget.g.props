@@ -5,12 +5,12 @@
     <RestoreTool Condition=" '$(RestoreTool)' == '' ">NuGet</RestoreTool>
     <ProjectAssetsFile Condition=" '$(ProjectAssetsFile)' == '' ">$(MSBuildThisFileDirectory)project.assets.json</ProjectAssetsFile>
     <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">$(UserProfile)\.nuget\packages\</NuGetPackageRoot>
-    <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">C:\Users\MSI ThinGF63\.nuget\packages\</NuGetPackageFolders>
+    <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">C:\Users\Anton\.nuget\packages\</NuGetPackageFolders>
     <NuGetProjectStyle Condition=" '$(NuGetProjectStyle)' == '' ">PackageReference</NuGetProjectStyle>
-    <NuGetToolVersion Condition=" '$(NuGetToolVersion)' == '' ">6.13.2</NuGetToolVersion>
+    <NuGetToolVersion Condition=" '$(NuGetToolVersion)' == '' ">7.0.0</NuGetToolVersion>
   </PropertyGroup>
   <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <SourceRoot Include="C:\Users\MSI ThinGF63\.nuget\packages\" />
+    <SourceRoot Include="C:\Users\Anton\.nuget\packages\" />
   </ItemGroup>
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <Import Project="$(NuGetPackageRoot)xunit.core\2.9.3\build\xunit.core.props" Condition="Exists('$(NuGetPackageRoot)xunit.core\2.9.3\build\xunit.core.props')" />
@@ -21,11 +21,11 @@
     <Import Project="$(NuGetPackageRoot)microsoft.entityframeworkcore.design\9.0.9\build\net8.0\Microsoft.EntityFrameworkCore.Design.props" Condition="Exists('$(NuGetPackageRoot)microsoft.entityframeworkcore.design\9.0.9\build\net8.0\Microsoft.EntityFrameworkCore.Design.props')" />
   </ImportGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Pkgxunit_analyzers Condition=" '$(Pkgxunit_analyzers)' == '' ">C:\Users\MSI ThinGF63\.nuget\packages\xunit.analyzers\1.18.0</Pkgxunit_analyzers>
-    <PkgMicrosoft_Extensions_ApiDescription_Server Condition=" '$(PkgMicrosoft_Extensions_ApiDescription_Server)' == '' ">C:\Users\MSI ThinGF63\.nuget\packages\microsoft.extensions.apidescription.server\9.0.0</PkgMicrosoft_Extensions_ApiDescription_Server>
-    <PkgPester Condition=" '$(PkgPester)' == '' ">C:\Users\MSI ThinGF63\.nuget\packages\pester\4.0.5-rc</PkgPester>
-    <PkgPesterForPackageManagerConsole Condition=" '$(PkgPesterForPackageManagerConsole)' == '' ">C:\Users\MSI ThinGF63\.nuget\packages\pesterforpackagemanagerconsole\2.0.0-rc</PkgPesterForPackageManagerConsole>
-    <PkgMicrosoft_CodeAnalysis_Analyzers Condition=" '$(PkgMicrosoft_CodeAnalysis_Analyzers)' == '' ">C:\Users\MSI ThinGF63\.nuget\packages\microsoft.codeanalysis.analyzers\3.3.4</PkgMicrosoft_CodeAnalysis_Analyzers>
-    <PkgMicrosoft_EntityFrameworkCore_Tools Condition=" '$(PkgMicrosoft_EntityFrameworkCore_Tools)' == '' ">C:\Users\MSI ThinGF63\.nuget\packages\microsoft.entityframeworkcore.tools\9.0.9</PkgMicrosoft_EntityFrameworkCore_Tools>
+    <Pkgxunit_analyzers Condition=" '$(Pkgxunit_analyzers)' == '' ">C:\Users\Anton\.nuget\packages\xunit.analyzers\1.18.0</Pkgxunit_analyzers>
+    <PkgMicrosoft_Extensions_ApiDescription_Server Condition=" '$(PkgMicrosoft_Extensions_ApiDescription_Server)' == '' ">C:\Users\Anton\.nuget\packages\microsoft.extensions.apidescription.server\9.0.0</PkgMicrosoft_Extensions_ApiDescription_Server>
+    <PkgPester Condition=" '$(PkgPester)' == '' ">C:\Users\Anton\.nuget\packages\pester\4.0.5-rc</PkgPester>
+    <PkgPesterForPackageManagerConsole Condition=" '$(PkgPesterForPackageManagerConsole)' == '' ">C:\Users\Anton\.nuget\packages\pesterforpackagemanagerconsole\2.0.0-rc</PkgPesterForPackageManagerConsole>
+    <PkgMicrosoft_CodeAnalysis_Analyzers Condition=" '$(PkgMicrosoft_CodeAnalysis_Analyzers)' == '' ">C:\Users\Anton\.nuget\packages\microsoft.codeanalysis.analyzers\3.3.4</PkgMicrosoft_CodeAnalysis_Analyzers>
+    <PkgMicrosoft_EntityFrameworkCore_Tools Condition=" '$(PkgMicrosoft_EntityFrameworkCore_Tools)' == '' ">C:\Users\Anton\.nuget\packages\microsoft.entityframeworkcore.tools\9.0.9</PkgMicrosoft_EntityFrameworkCore_Tools>
   </PropertyGroup>
 </Project>

@@ -4097,19 +4097,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\MSI ThinGF63\\.nuget\\packages\\": {}
+    "C:\\Users\\Anton\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\MSI ThinGF63\\Desktop\\2_kurs_kod\\API\\API.csproj",
+      "projectUniqueName": "C:\\Users\\Anton\\Desktop\\2_kurs\\NotifySys\\API\\API.csproj",
       "projectName": "API",
-      "projectPath": "C:\\Users\\MSI ThinGF63\\Desktop\\2_kurs_kod\\API\\API.csproj",
-      "packagesPath": "C:\\Users\\MSI ThinGF63\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\MSI ThinGF63\\Desktop\\2_kurs_kod\\API\\obj\\",
+      "projectPath": "C:\\Users\\Anton\\Desktop\\2_kurs\\NotifySys\\API\\API.csproj",
+      "packagesPath": "C:\\Users\\Anton\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Anton\\Desktop\\2_kurs\\NotifySys\\API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\MSI ThinGF63\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Anton\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -4133,7 +4133,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.200"
+      "SdkAnalysisLevel": "10.0.100"
     },
     "frameworks": {
       "net9.0": {
@@ -4207,7 +4207,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.205/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

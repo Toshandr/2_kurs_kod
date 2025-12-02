@@ -12,7 +12,7 @@ $password = "55455901"
 
 # Экспортируем только данные (без структуры)
 $env:PGPASSWORD = $password
-pg_dump -h $host -p $port -U $user -d $database `
+& "C:\Program Files\PostgreSQL\18\bin\pg_dump.exe" -h $host -p $port -U $user -d $database `
   --data-only `
   --table=users `
   --column-inserts `
